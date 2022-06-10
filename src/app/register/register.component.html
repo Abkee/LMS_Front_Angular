@@ -1,0 +1,57 @@
+<button (click)="onclickTutor()" type="button" class="w-100 btn btn-lg btn-primary">
+  {{ClikRegisTutor?"Register Tutor":"Register Tutor"}}
+</button>
+<ng-container *ngIf="VisibleTutor">
+  <div class="login container">
+  <form [formGroup]="regisformTutor" (ngSubmit)="submitTutor()">
+      <h1 class="h3 mb-3 fw-normal">Please Register</h1>
+        <input formControlName="username" class="form-control"  placeholder="Name" >
+        <p *ngIf="this.regisformTutor.get('username')?.invalid && this.regisformTutor.get('username')?.touched">
+          <small class="text-danger">Username is required</small>
+      </p>
+        <input formControlName="email" type="email" class="form-control"  placeholder="Email" >
+        <p *ngIf="this.regisformTutor.get('email')?.invalid && this.regisformTutor.get('email')?.touched">
+          <small class="text-danger">Email is required</small>
+      </p>
+        <input formControlName="password" type="password" class="form-control" placeholder="Password" >
+        <p *ngIf="this.regisformTutor.get('password')?.invalid && this.regisformTutor.get('password')?.touched">
+          <small class="text-danger">password is required</small>
+      </p>
+        <input formControlName="schoolId"  class="form-control" placeholder="SchoolId" >
+        <p *ngIf="this.regisformTutor.get('schoolId')?.invalid && this.regisformTutor.get('schoolId')?.touched">
+          <small class="text-danger">schoolId is required</small>
+      </p>
+        
+      <button [disabled]="regisformTutor.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+    </form>
+    </div>
+</ng-container>
+
+<button (click)="onclickStudent()" type="button" class="w-100 btn btn-lg btn-primary">
+  {{ClikRegisTutor?"Register Student":"Register Student"}}
+</button>
+<ng-container *ngIf="VisibleStudent">
+  <div class="login container">
+    <form [formGroup]="regisformStudent" (ngSubmit)="submitStudent()">
+        <h1 class="h3 mb-3 fw-normal">Please Register</h1>
+          <input formControlName="username" class="form-control"  placeholder="Name" >
+          <p *ngIf="this.regisformStudent.get('username')?.invalid && this.regisformStudent.get('username')?.touched">
+            <small class="text-danger">Username is required</small>
+        </p>
+          <input formControlName="email" type="email" class="form-control"  placeholder="Email" >
+          <p *ngIf="this.regisformStudent.get('email')?.invalid && this.regisformStudent.get('email')?.touched">
+            <small class="text-danger">Email is required</small>
+        </p>
+          <input formControlName="password" type="password" class="form-control" placeholder="Password" >
+          <p *ngIf="this.regisformStudent.get('password')?.invalid && this.regisformStudent.get('password')?.touched">
+            <small class="text-danger">password is required</small>
+        </p>
+          <input formControlName="klassId"  class="form-control" placeholder="KlassId" >
+          <p *ngIf="this.regisformStudent.get('klassId')?.invalid && this.regisformStudent.get('klassId')?.touched">
+            <small class="text-danger">klassId is required</small>
+        </p>
+          
+        <button [disabled]="regisformStudent.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+      </form>
+      </div>
+</ng-container>

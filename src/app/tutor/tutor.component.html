@@ -1,0 +1,59 @@
+<div>
+    <p>This is Tutor page</p>
+    <button (click)="showProfile()" type="button" class="w-100 btn btn-lg btn-primary" *ngIf="authenticated">
+        {{ClikShowProfile?"Show Profile":"Hide Profile"}}
+    </button>
+    <ng-container *ngIf="VisibleProfile">
+        <div *ngIf="profils">
+            <span>{{profils.name}}</span> -------------
+            <span>{{profils.surname}}</span>
+        </div>
+        <div>
+            <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+                <input formControlName="name" class="form-control" placeholder="Name" required>  
+                <input formControlName="surname" class="form-control" placeholder="Surname" required>       
+                <button [disabled]="profileForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">apply changes</button>
+              </form>
+        </div>
+    </ng-container>
+    <button (click)="showSubjects()" type="button" class="w-100 btn btn-lg btn-primary" *ngIf="authenticated">
+        {{ClikShowSubjects?"Show my Subjects":"Hide my Subjects"}}
+    </button>
+    <ng-container *ngIf="VisibleSubjects">
+        <div *ngFor="let sub of subjects">
+            <span>{{sub.name}}</span> -------------
+        </div>
+    </ng-container>
+
+    <form [formGroup]="klassIdForm" (ngSubmit)="showStudents()">
+        <input formControlName="klassId" class="form-control"  placeholder="KlassId" required>         
+        <button [disabled]="klassIdForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Show Students</button>
+      </form>
+    <div *ngFor="let student of students">
+        <span>{{student.name}} </span> 
+        <span>{{student.surname}} </span> -----
+    </div>
+    <button (click)="showCreateKlass()" type="button" class="w-100 btn btn-lg btn-primary" *ngIf="authenticated">
+        {{ClikShowCreateKlass?"Create klass":"Create klass"}}
+    </button>
+    <ng-container *ngIf="VisibleCreateKlass">
+        <form [formGroup]="klassForm" (ngSubmit)="createKlass()">
+            <input formControlName="name" class="form-control"  placeholder="Name of Klass" required>     
+            <input formControlName="id" class="form-control"  placeholder="KlassId" required>   
+            <input formControlName="schoolId" class="form-control"  placeholder="schoolId" required>       
+            <button [disabled]="klassForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+          </form>
+    </ng-container>
+    <button (click)="showPutGrade()" type="button" class="w-100 btn btn-lg btn-primary" *ngIf="authenticated">
+        {{ClikShowPutGrade?"Put Grade":"Put Grade"}}
+    </button>
+    <ng-container *ngIf="VisiblePutGrade">
+        <form [formGroup]="gradeForm" (ngSubmit)="putGrade()"> 
+            <input formControlName="id" class="form-control"  placeholder="GradeId" required>   
+            <input formControlName="grade" class="form-control"  placeholder="Grade" required>    
+            <input formControlName="subjectId" class="form-control"  placeholder="subjectId" required>      
+            <input formControlName="studentId" class="form-control"  placeholder="studentId" required>  
+            <button [disabled]="gradeForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+          </form>
+    </ng-container>
+</div>

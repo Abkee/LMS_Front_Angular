@@ -1,0 +1,36 @@
+<div>
+    <p>This is Student page</p>
+    <button (click)="showProfile()" type="button" class="w-100 btn btn-lg btn-primary" *ngIf="authenticated">
+    {{ClikShowProfile?"Show Profile":"Hide Profile"}}
+    </button>
+    <ng-container *ngIf="VisibleProfile">
+        <div *ngIf="profils">
+            <span>{{profils.name}}</span> -------------
+            <span>{{profils.surname}}</span>
+        </div>
+        <div>
+            <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+                <input formControlName="name" class="form-control" placeholder="Name" required>  
+                <input formControlName="surname" class="form-control" placeholder="Surname" required>       
+                <button [disabled]="profileForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">apply changes</button>
+              </form>
+        </div>
+    </ng-container>
+    <button (click)="showSubjects()" type="button" class="w-100 btn btn-lg btn-primary" *ngIf="authenticated">
+        {{ClikShowSubjects?"Show Subjects":"Hide Subjects"}}
+    </button>
+    <ng-container *ngIf="VisibleSubjects">
+        <div *ngFor="let subject of subjects">
+            <span>{{subject.name}}</span> -----
+        </div>
+    </ng-container>
+    <button (click)="showGrades()" type="button" class="w-100 btn btn-lg btn-primary" *ngIf="authenticated">
+        {{ClikShowGrades?"Show Grades":"Hide Grades"}}
+    </button>
+    <ng-container *ngIf="VisibleGrades">
+        <div *ngFor="let gr of grades">
+            <span>{{gr.nameSubject}}</span> -----
+            <span>{{gr.grade}}</span> 
+        </div>
+    </ng-container>
+</div>
