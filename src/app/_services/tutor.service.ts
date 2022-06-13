@@ -6,6 +6,7 @@ import { AccesstokenService } from './accesstoken.service';
 import { TutorSubjects } from '../_models/tutorSubjects';
 import { Students } from '../_models/students';
 import { FormGroup } from '@angular/forms';
+import { PutGrade } from '../_models/putgrade';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,9 @@ export class TutorService {
   private api_showSubjects: string = "https://localhost:7052/api/Tutor/api/showsubjects";
   private api_showStudents: string = "https://localhost:7052/api/Tutor/api/showstudents/subjectId?subjectId=";
   private api_changeProfile: string = "https://localhost:7052/api/Tutor/api/update/profile";
-  private api_CreateKlass: string = "https://localhost:7052/api/Tutor/api/create/klass";
+  //private api_CreateKlass: string = "https://localhost:7052/api/Tutor/api/create/klass";
   private api_PutGrade: string = "https://localhost:7052/api/Tutor/api/putgrade";
+  private api_ShowStudentsByName: string = "https://localhost:7052/api/Tutor/api/showstudentsbyname/bystudent?bystudent=";
 
   showProfile(): Observable<Profile>
   {
@@ -40,14 +42,14 @@ export class TutorService {
    return this.http.get<TutorSubjects[]>(this.api_showSubjects,{headers: reqHeader});
   }
 
-  showStudents(klassId: string): Observable<Students[]>
+  showStudents(subjectId?: string | null): Observable<Students[]>
   {
     var reqHeader = new HttpHeaders({ 
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.accesstokenService.getAccessToken()
     });
-    this.api_showStudents += klassId;
-    return this.http.get<Students[]>(this.api_showStudents,{headers: reqHeader});
+    let api = this.api_showStudents + subjectId;
+    return this.http.get<Students[]>(api,{headers: reqHeader});
   }
 
   updateProfile(profile: FormGroup): Observable<any>
@@ -58,22 +60,23 @@ export class TutorService {
     });
     return this.http.post(this.api_changeProfile, profile.getRawValue(), {headers: reqHeader});
   }
-
-  createKlass(klass: FormGroup): Observable<any>
+  
+  putGrade(putGrade: PutGrade[]): Observable<any>
   {
     var reqHeader = new HttpHeaders({ 
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.accesstokenService.getAccessToken()
     });
-    return this.http.post(this.api_CreateKlass, klass.getRawValue(), {headers: reqHeader});
+    return this.http.post(this.api_PutGrade, putGrade, {headers: reqHeader});
   }
 
-  putGrade(grade: FormGroup): Observable<any>
+  showAllStudentsByName(name: string | undefined): Observable<any>
   {
     var reqHeader = new HttpHeaders({ 
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.accesstokenService.getAccessToken()
     });
-    return this.http.post(this.api_PutGrade, grade.getRawValue(), {headers: reqHeader});
+    let api = this.api_ShowStudentsByName + name;
+    return this.http.get(api, {headers: reqHeader});
   }
 }

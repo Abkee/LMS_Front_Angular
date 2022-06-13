@@ -14,6 +14,8 @@ import { AccesstokenService } from '../_services/accesstoken.service';
 export class LoginComponent implements OnInit {
   loginform!: FormGroup;
   role!: string;
+  status: string = '';
+
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -28,6 +30,7 @@ export class LoginComponent implements OnInit {
     });
   }
   submit(): void{
+    this.status = 'Unauthorized';
     console.log(this.loginform.getRawValue());
     this.http.post('https://localhost:7052/api/Authenticate/login',  this.loginform.getRawValue())
     .subscribe((resp: any) => {

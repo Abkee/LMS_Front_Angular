@@ -1,4 +1,4 @@
-export class Students{
+export class ShowStudents{
     id: string | undefined;
     name: string | undefined;
     surname: string | undefined;
@@ -7,5 +7,4 @@ export class Students{
     klassId: string | undefined;
     klass: string | undefined;
 
-    newGradeNumber: number | undefined;
 }

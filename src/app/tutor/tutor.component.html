@@ -21,25 +21,31 @@
     </button>
     <ng-container *ngIf="VisibleSubjects">
         <div *ngFor="let sub of subjects">
-            <span>{{sub.name}}</span> -------------
+            <!--<Button *ngIf="sub.id" (click)="showStudents(sub.id)">{{sub.name}}</Button>   -->
+            <a [routerLink]="['/work', sub.id]">
+            {{ sub.name }}
+            </a>
         </div>
     </ng-container>
-
-    <form [formGroup]="klassIdForm" (ngSubmit)="showStudents()">
-        <input formControlName="klassId" class="form-control"  placeholder="KlassId" required>         
-        <button [disabled]="klassIdForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Show Students</button>
-      </form>
-    <div *ngFor="let student of students">
-        <span>{{student.name}} </span> 
-        <span>{{student.surname}} </span> -----
-    </div>
+       
+    <button (click)="showStudents()" class="w-100 btn btn-lg btn-primary" type="submit">
+        {{ClikShowStudents?"Find my Students":"Find my Students"}}
+    </button>
+    <ng-container *ngIf="VisibleStudents">
+        <input type="text" id="name" [(ngModel)]="nameStudent" placeholder="Name of Student" required minlength="1" maxlength="12" size="30">
+        <button (click)="findStudent()"> Find</button>
+        <div *ngFor="let sub of showFind ">
+            <p> Name: {{sub.name}}</p> -------------- 
+            <p> Surname: {{sub.surname}}</p>
+        </div>
+    </ng-container>
+    <!--
     <button (click)="showCreateKlass()" type="button" class="w-100 btn btn-lg btn-primary" *ngIf="authenticated">
         {{ClikShowCreateKlass?"Create klass":"Create klass"}}
     </button>
     <ng-container *ngIf="VisibleCreateKlass">
         <form [formGroup]="klassForm" (ngSubmit)="createKlass()">
             <input formControlName="name" class="form-control"  placeholder="Name of Klass" required>     
-            <input formControlName="id" class="form-control"  placeholder="KlassId" required>   
             <input formControlName="schoolId" class="form-control"  placeholder="schoolId" required>       
             <button [disabled]="klassForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
           </form>
@@ -56,4 +62,6 @@
             <button [disabled]="gradeForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
           </form>
     </ng-container>
+
+    --->
 </div>

@@ -10,7 +10,8 @@ import { NavComponent } from './nav/nav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { TutorComponent } from './tutor/tutor.component';
-import { StudentComponent } from './student/student.component'
+import { StudentComponent } from './student/student.component';
+import { WorkComponent } from './work/work.component'
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { StudentComponent } from './student/student.component'
     HomeComponent,
     NavComponent,
     TutorComponent,
-    StudentComponent
+    StudentComponent,
+    WorkComponent
   ],
   imports: [
     BrowserModule,

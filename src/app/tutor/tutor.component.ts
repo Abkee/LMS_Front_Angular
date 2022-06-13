@@ -5,6 +5,7 @@ import { TutorService } from '../_services/tutor.service';
 import { TutorSubjects } from '../_models/tutorSubjects';
 import { Students } from '../_models/students';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ShowStudents } from '../_models/showStudents';
 import { Klass } from '../_models/klass';
 
 @Component({
@@ -17,12 +18,18 @@ export class TutorComponent implements OnInit {
   profils : Profile | undefined;
   authenticated = false;
   subjects: TutorSubjects[] | undefined;
-  klassIdForm!: FormGroup;
   profileForm!: FormGroup;
   students: Students[] | undefined;
-  klass: Klass | undefined;
+  allMyStudents: Students[] = [];
   klassForm!: FormGroup;
   gradeForm!: FormGroup;
+  showFind: ShowStudents[] | undefined;
+  //showFind: Students[] | undefined;
+  showIds: string[] = []
+  nameStudent: string | undefined;
+  subjectIds: string[] = [];
+
+  showStudentse: Students[] = [];
   constructor(private tutorService: TutorService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -31,9 +38,6 @@ export class TutorComponent implements OnInit {
         this.authenticated = auth;
       }
     );
-    this.klassIdForm = this.formBuilder.group({
-      klassId: ['', [Validators.required]]
-    });
     this.profileForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       surname: ['', [Validators.required]]
@@ -58,63 +62,46 @@ export class TutorComponent implements OnInit {
   showSubjects(){
     this.ClikShowSubjects = !this.ClikShowSubjects;
     this.VisibleSubjects = !this.VisibleSubjects;
-    this.tutorService.showSubjects().subscribe(res =>{
-      this.subjects = res;
+    if(this.subjects == undefined){
+      this.tutorService.showSubjects().subscribe(res =>{
+        this.subjects = res;
+        console.log(res);
+      });
+    }
+  }
+
+  ClikShowStudents: boolean = true;
+  VisibleStudents: boolean = false;
+  showStudents(){
+    this.ClikShowStudents = !this.ClikShowStudents;
+    this.VisibleStudents = !this.VisibleStudents;
+    
+    if(this.subjects == undefined){
+      this.tutorService.showSubjects().subscribe(res =>{
+        this.subjects = res;
+        if(this.subjectIds.length==0){
+          this.subjects?.forEach(element => {
+            if(element.id != undefined) this.subjectIds.push(element.id);
+          });
+         // console.log(this.subjectIds);
+        }
+      });
+    } 
+  }
+  // Continium
+  findStudent(){
+    this.tutorService.showAllStudentsByName(this.nameStudent).subscribe(res =>{
+      this.showFind = res;
       console.log(res);
+      console.log(this.showFind);
     });
   }
 
-  showStudents(){
-    this.tutorService.showStudents(this.klassIdForm.value.klassId).subscribe(res =>{
-      this.students = res;
-      console.log(res);
-    });
-    this.klassIdForm.reset();
-  }
   updateProfile(){
     console.log(this.profileForm.getRawValue());
     this.tutorService.updateProfile(this.profileForm).subscribe(res =>{
       this.profils = this.profileForm.getRawValue();
       this.profileForm.reset();
-    });
-  }
-
-  ClikShowCreateKlass: boolean = true;
-  VisibleCreateKlass: boolean = false;
-  showCreateKlass(){
-    this.ClikShowCreateKlass = !this.ClikShowCreateKlass;
-    this.VisibleCreateKlass = !this.VisibleCreateKlass;
-    this.klassForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      id: ['',[Validators.required]],
-      schoolId: ['', [Validators.required]]
-    });
-  }
-
-  createKlass(){
-    console.log(this.klassForm.getRawValue());
-    this.tutorService.createKlass(this.klassForm).subscribe(res =>{
-      this.klassForm.reset();
-    });
-  }
-
-  ClikShowPutGrade: boolean = true;
-  VisiblePutGrade: boolean = false;
-  showPutGrade(){
-    this.ClikShowPutGrade = !this.ClikShowPutGrade;
-    this.VisiblePutGrade = !this.VisiblePutGrade;
-    this.gradeForm = this.formBuilder.group({
-      id: ['',[Validators.required]],
-      grade: ['',[Validators.required]],
-      subjectId: ['', [Validators.required]],
-      studentId: ['', [Validators.required]]
-    });
-  }
-
-  putGrade(){
-    console.log(this);
-    this.tutorService.putGrade(this.gradeForm).subscribe(res => {
-      this.gradeForm.reset();
     });
   }
 }

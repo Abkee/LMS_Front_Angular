@@ -63,10 +63,12 @@ export class StudentComponent implements OnInit {
   {
     this.ClikShowGrades = !this.ClikShowGrades;
     this.VisibleGrades = !this.VisibleGrades;
-    this.studentService.showGrades().subscribe(res =>{
-      console.log(res);
-      this.grades = res;
-    });
+    if(this.grades == undefined){
+      this.studentService.showGrades().subscribe(res =>{
+        console.log(res);
+        this.grades = res;
+      });
+    }
   }
   updateProfile(){
     console.log(this.profileForm.getRawValue());

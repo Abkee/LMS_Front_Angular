@@ -6,3 +6,6 @@
       
     <button [disabled]="loginform.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
   </form>
+  <div *ngIf="status">
+    <p>{{status}}!</p>
+  </div>

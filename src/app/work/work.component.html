@@ -1,0 +1,13 @@
+<div *ngFor="let student of students">
+    <span>{{student.name}} </span> 
+    <span>{{student.surname}} </span> -----
+    <div class="{{student.name}}">
+        <input type="number" min="0" max="100" [(ngModel)]="student.newGradeNumber">
+    </div>
+</div>
+<br/>
+<br/>
+<button (click)="putGrade()" class="w-100 btn btn-lg btn-primary" type="submit">Put Grade</button>
+<div *ngIf="statusText">
+    {{statusText}}
+</div>
